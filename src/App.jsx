@@ -37,7 +37,7 @@ export default function App() {
   const handleAuth = (userData, token) => { setToken(token); setUser(userData); loadMe(); };
   const handleLogout = () => { clearToken(); setUser(null); setView('dashboard'); };
 
-  if (loading) return <div className="loading">Loading ICICI Bank…</div>;
+  if (loading) return <div className="loading">Loading Sri Venkateswara Bank…</div>;
   if (!user) return <Auth onAuth={handleAuth} />;
 
   const renderView = () => {

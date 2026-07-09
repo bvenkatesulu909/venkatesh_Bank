@@ -8,9 +8,9 @@ let adminId;
 if (!existingAdmin) {
   const info = db.prepare(
     'INSERT INTO users (first_name, last_name, email, phone, password_hash, role, kyc_status, address, city, state, pincode, pan_number, aadhar_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
-  ).run('Admin', 'User', adminEmail, '9999999999', hashPassword('admin123'), 'admin', 'verified', 'ICICI Bank HO, BKC', 'Mumbai', 'Maharashtra', '400051', 'ABCDE1234F', '111122223333');
+  ).run('Admin', 'User', adminEmail, '9999999999', hashPassword('admin123'), 'admin', 'verified', 'Bank HO, Andhra Pradesh', 'Mumbai', 'Maharashtra', '400051', 'ABCDE1234F', '111122223333');
   adminId = info.lastInsertRowid;
-  db.prepare('INSERT INTO accounts (account_number, user_id, type, balance) VALUES (?,?,?,?)').run('ICICIADMIN0001', adminId, 'savings', 5000000);
+  db.prepare('INSERT INTO accounts (account_number, user_id, type, balance) VALUES (?,?,?,?)').run('SVBAP0000001', adminId, 'savings', 5000000);
   console.log('Created admin: admin@icici.test / admin123');
 } else {
   adminId = existingAdmin.id;
@@ -25,9 +25,9 @@ if (!c1) {
     'INSERT INTO users (first_name, last_name, email, phone, password_hash, kyc_status, dob, address, city, state, pincode, pan_number, aadhar_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
   ).run('Rahul', 'Sharma', c1Email, '9876543210', hashPassword('rahul123'), 'verified', '1990-05-15', '42, MG Road', 'Mumbai', 'Maharashtra', '400001', 'PQRST5678G', '333344445555');
   c1Id = info.lastInsertRowid;
-  const accNo = 'ICIC1000001';
+  const accNo = 'SVBAP1000001';
   db.prepare('INSERT INTO accounts (account_number, user_id, type, balance, nominee_name) VALUES (?,?,?,?,?)').run(accNo, c1Id, 'savings', 285000, 'Priya Sharma');
-  db.prepare('INSERT INTO accounts (account_number, user_id, type, balance) VALUES (?,?,?,?)').run('ICIC1000002', c1Id, 'current', 75000);
+  db.prepare('INSERT INTO accounts (account_number, user_id, type, balance) VALUES (?,?,?,?)').run('SVBAP1000002', c1Id, 'current', 75000);
   c1Acct = db.prepare('SELECT * FROM accounts WHERE user_id = ? AND type = ?').get(c1Id, 'savings');
 } else {
   c1Id = c1.id;
@@ -43,7 +43,7 @@ if (!c2) {
     'INSERT INTO users (first_name, last_name, email, phone, password_hash, kyc_status, dob, address, city, state, pincode, pan_number, aadhar_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
   ).run('Priya', 'Patel', c2Email, '9876543211', hashPassword('priya123'), 'verified', '1992-08-22', '15, Ashram Road', 'Ahmedabad', 'Gujarat', '380009', 'LMNOP9012H', '666677778888');
   c2Id = info.lastInsertRowid;
-  db.prepare('INSERT INTO accounts (account_number, user_id, type, balance, nominee_name) VALUES (?,?,?,?,?)').run('ICIC2000001', c2Id, 'savings', 520000, 'Amit Patel');
+  db.prepare('INSERT INTO accounts (account_number, user_id, type, balance, nominee_name) VALUES (?,?,?,?,?)').run('SVBAP2000001', c2Id, 'savings', 520000, 'Amit Patel');
   c2Acct = db.prepare('SELECT * FROM accounts WHERE user_id = ? AND type = ?').get(c2Id, 'savings');
 } else {
   c2Id = c2.id;
@@ -100,7 +100,7 @@ if (c1Id) {
 // Beneficiary for Rahul
 if (c1Id) {
   db.prepare('INSERT INTO beneficiaries (user_id, name, account_number, ifsc_code, bank_name, type, nick_name, max_limit) VALUES (?,?,?,?,?,?,?,?)')
-    .run(c1Id, 'Amit Patel', 'ICIC2000001', 'ICIC0000001', 'ICICI Bank', 'within_bank', 'Amit - Savings', 50000);
+    .run(c1Id, 'Amit Patel', 'SVBAP2000001', 'SVBAP0000001', 'Sri Venkateswara Bank', 'within_bank', 'Amit - Savings', 50000);
   db.prepare('INSERT INTO beneficiaries (user_id, name, account_number, ifsc_code, bank_name, type, nick_name, max_limit) VALUES (?,?,?,?,?,?,?,?)')
     .run(c1Id, 'SBI Savings A/C', '500011223344', 'SBIN0000123', 'State Bank of India', 'other_bank', 'SBI - Mom', 25000);
 }

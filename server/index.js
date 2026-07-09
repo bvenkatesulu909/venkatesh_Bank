@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // Helpers
-function genAccountNo() { return 'ICIC' + Date.now().toString(36).toUpperCase() + String(Math.floor(Math.random()*9000+1000)); }
+function genAccountNo() { return 'SVBAP' + Date.now().toString(36).toUpperCase() + String(Math.floor(Math.random()*9000+1000)); }
 function genTransactionId() { return 'TXN' + Date.now().toString(36).toUpperCase() + crypto.randomBytes(3).toString('hex').toUpperCase(); }
 function genCardNo() {
   const seg = () => String(Math.floor(Math.random()*9000+1000));
@@ -46,7 +46,7 @@ app.post('/api/auth/register', (req, res) => {
     // Auto-create savings account
     const accNo = genAccountNo();
     db.prepare('INSERT INTO accounts (account_number, user_id, type, balance) VALUES (?, ?, ?, ?)').run(accNo, user.id, 'savings', 0);
-    notify(user.id, 'Account Created', `Welcome to ICICI Bank! Your savings account ${accNo} is ready.`);
+    notify(user.id, 'Account Created', `Welcome to Sri Venkateswara Bank! Your savings account ${accNo} is ready.`);
     res.status(201).json({ token: signToken(user), user: publicUser(user) });
   } catch (e) { console.error(e); res.status(500).json({ error: 'Registration failed' }); }
 });
@@ -278,7 +278,7 @@ app.get('/api/bills/providers', (req, res) => {
     { type: 'dth', providers: ['Tata Play', 'Airtel DTH', 'Dish TV', 'SUN Direct'] },
     { type: 'broadband', providers: ['JioFiber', 'Airtel Xstream', 'ACT Fibernet', 'Hathway'] },
     { type: 'gas', providers: ['IOCL', 'HP Gas', 'Bharat Gas', 'Mahanagar Gas'] },
-    { type: 'insurance', providers: ['LIC', 'HDFC Life', 'ICICI Prudential', 'Bajaj Allianz'] },
+    { type: 'insurance', providers: ['LIC', 'HDFC Life', 'Bajaj Allianz', 'SBI Life'] },
   ]});
 });
 
@@ -466,7 +466,7 @@ app.put('/api/admin/loans/:id/reject', requireAuth, requireAdmin, (req, res) => 
 
 // ========= HEALTH =========
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', bank: 'ICICI Bank Clone', version: '1.0.0', time: new Date().toISOString() });
+  res.json({ status: 'ok', bank: 'Sri Venkateswara Bank of Andhra Pradesh', version: '1.0.0', time: new Date().toISOString() });
 });
 
 // ========= SERVE FRONTEND =========

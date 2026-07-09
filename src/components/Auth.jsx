@@ -25,7 +25,7 @@ export default function Auth({ onAuth }) {
   return (
     <div className="auth-wrap">
       <div className="auth-card">
-        <h1 style={{ color: 'var(--primary)' }}>ICICI Bank</h1>
+        <h1 style={{ color: 'var(--primary)' }}>Sri Venkateswara Bank</h1>
         <p className="sub">{mode === 'login' ? 'Sign in to Internet Banking' : 'Open your account'}</p>
         {error && <div className="error-msg">{error}</div>}
         <form onSubmit={submit}>
@@ -42,7 +42,7 @@ export default function Auth({ onAuth }) {
           <button className="btn" style={{ width: '100%', marginTop: 8 }} disabled={busy}>{busy ? 'Please wait…' : mode === 'login' ? 'Sign In' : 'Open Account'}</button>
         </form>
         <div className="auth-toggle">
-          {mode === 'login' ? <>New to ICICI? <a onClick={() => { setMode('register'); setError(''); }}>Open Account</a></>
+          {mode === 'login' ? <>New to Our Bank? <a onClick={() => { setMode('register'); setError(''); }}>Open Account</a></>
           : <>Already have an account? <a onClick={() => { setMode('login'); setError(''); }}>Sign in</a></>}
         </div>
         {mode === 'login' && (

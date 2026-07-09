@@ -35,5 +35,5 @@ export const BillProviders = {
   dth: ['Tata Play', 'Airtel DTH', 'Dish TV', 'SUN Direct'],
   broadband: ['JioFiber', 'Airtel Xstream', 'ACT Fibernet', 'Hathway'],
   gas: ['IOCL', 'HP Gas', 'Bharat Gas', 'Mahanagar Gas'],
-  insurance: ['LIC', 'HDFC Life', 'ICICI Prudential', 'Bajaj Allianz'],
+  insurance: ['LIC', 'HDFC Life', 'Bajaj Allianz', 'SBI Life'],
 };

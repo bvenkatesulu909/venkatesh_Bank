@@ -25,7 +25,7 @@ export default function Sidebar({ view, setView, user, onLogout, unread }) {
   return (
     <div className="sidebar">
       <div className="sidebar-top">
-        <div className="sidebar-brand">ICICI Bank <small>Internet Banking</small></div>
+        <div className="sidebar-brand">Sri Venkateswara Bank <small>Andhra Pradesh</small></div>
       </div>
       {nav.map((n, i) =>
         n.section ? <div key={`s-${i}`} className="nav-section">{n.section}</div>

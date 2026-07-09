@@ -40,7 +40,7 @@ export default function Transfers() {
           <div className="card">
             <div className="card-header"><h3>New Transfer</h3></div>
             <div style={{display:'flex',gap:8,marginBottom:14}}>
-              <button className={`btn small ${mode==='within'?'':'secondary'}`} onClick={()=>setMode('within')}>Within ICICI</button>
+              <button className={`btn small ${mode==='within'?'':'secondary'}`} onClick={()=>setMode('within')}>Within Bank</button>
               <button className={`btn small ${mode==='other'?'':'secondary'}`} onClick={()=>setMode('other')}>Other Bank</button>
             </div>
             {msg && <div className="success-msg">{msg}</div>}
@@ -53,7 +53,7 @@ export default function Transfers() {
                 </select>
               </div>
               {mode === 'within' ? (
-                <div className="field" style={{marginBottom:12}}><label>To Account (ICICI)</label>
+                <div className="field" style={{marginBottom:12}}><label>To Account (Within Bank)</label>
                   <select value={form.to_account} onChange={u('to_account')} required>
                     <option value="">Select account</option>
                     {accounts.map(a => <option key={a.id} value={a.id}>{a.account_number} - {a.type}</option>)}
@@ -78,7 +78,7 @@ export default function Transfers() {
             <div className="card" style={{marginBottom:16}}>
               <div className="card-header"><h3>Transfer Limits</h3></div>
               <table className="compact"><tbody>
-                <tr><td>IMPS (Within ICICI)</td><td style={{textAlign:'right'}}>₹5,00,000</td></tr>
+                <tr><td>IMPS (Within Bank)</td><td style={{textAlign:'right'}}>₹5,00,000</td></tr>
                 <tr><td>NEFT (Other Bank)</td><td style={{textAlign:'right'}}>₹50,000 (per ben)</td></tr>
                 <tr><td>RTGS</td><td style={{textAlign:'right'}}>No limit</td></tr>
               </tbody></table>
@@ -89,7 +89,7 @@ export default function Transfers() {
                 • NEFT: ₹0.50 fee for transactions above ₹50,000<br />
                 • IMPS: 24x7 instant transfers<br />
                 • RTGS: Minimum ₹2,00,000<br />
-                • Transfers within ICICI are free
+                transfers within bank are free
               </div>
             </div>
           </div>

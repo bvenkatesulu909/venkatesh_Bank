@@ -1,7 +1,7 @@
 {
   "name": "banking-system",
   "version": "1.0.0",
-  "description": "Full-stack Banking Application (ICICI-style)",
+  "description": "Full-stack Banking Application - React + Express + SQLite",
   "type": "module",
   "engines": { "node": ">=22.5.0" },
   "scripts": {
