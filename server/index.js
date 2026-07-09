@@ -87,7 +87,7 @@ app.get('/api/dashboard', requireAuth, (req, res) => {
   const totalBalance = accounts.reduce((s, a) => s + (a.status === 'active' ? a.balance : 0), 0);
   const recentTxn = db.prepare('SELECT * FROM transactions WHERE from_user_id = ? ORDER BY created_at DESC LIMIT 8').all(uid);
   const activeFds = db.prepare('SELECT COUNT(*) c FROM fixed_deposits WHERE user_id = ? AND status = ?').get(uid, 'active').c;
-  const activeLoans = db.prepare('SELECT COUNT(*) c FROM loans WHERE user_id = ? AND status IN (?)').get(uid, 'approved').c;
+  const activeLoans = db.prepare("SELECT COUNT(*) c FROM loans WHERE user_id = ? AND status = ?").get(uid, 'approved').c;
   const unreadNotifs = db.prepare('SELECT COUNT(*) c FROM notifications WHERE user_id = ? AND is_read = 0').get(uid).c;
   const cards = db.prepare('SELECT id, card_type, network, status, is_virtual FROM cards WHERE user_id = ?').all(uid);
   res.json({ accounts, totalBalance, recentTxn, activeFds, activeLoans, unreadNotifs, cards });
@@ -362,8 +362,13 @@ app.post('/api/deposits/rd/create', requireAuth, (req, res) => {
 
 // ========= LOANS =========
 app.get('/api/loans', requireAuth, (req, res) => {
-  const rows = db.prepare('SELECT * FROM loans WHERE user_id = ? ORDER BY created_at DESC').all(req.user.id);
-  res.json({ data: rows });
+  try {
+    const rows = db.prepare('SELECT * FROM loans WHERE user_id = ? ORDER BY application_date DESC').all(req.user.id);
+    res.json({ data: rows });
+  } catch (e) {
+    console.error('Loans error:', e);
+    res.status(500).json({ error: e.message });
+  }
 });
 
 app.post('/api/loans/apply', requireAuth, (req, res) => {

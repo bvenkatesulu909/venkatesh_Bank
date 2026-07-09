@@ -4,10 +4,26 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 const getDataDir = () => {
-  const dir = path.dirname(fileURLToPath(import.meta.url));
-  const dataDir = path.join(dir, 'data');
-  if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-  return dataDir;
+  // Netlify Functions / serverless — use /tmp (writable)
+  if (process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    return '/tmp';
+  }
+  // CJS context (bundled by serverless-http) — use __dirname
+  if (typeof __dirname !== 'undefined') {
+    const dataDir = path.join(__dirname, 'data');
+    if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+    return dataDir;
+  }
+  // ESM context — use import.meta.url
+  try {
+    const dir = path.dirname(fileURLToPath(import.meta.url));
+    const dataDir = path.join(dir, 'data');
+    if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+    return dataDir;
+  } catch {
+    // Ultimate fallback
+    return process.cwd() + '/server/data';
+  }
 };
 const dbPath = process.env.DB_PATH || path.join(getDataDir(), 'bank.db');
 const db = new DatabaseSync(dbPath);
