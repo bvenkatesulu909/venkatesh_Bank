@@ -3,12 +3,13 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const dataDir = path.join(__dirname, 'data');
-if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-
-const dbPath = process.env.DB_PATH || path.join(dataDir, 'bank.db');
+const getDataDir = () => {
+  const dir = path.dirname(fileURLToPath(import.meta.url));
+  const dataDir = path.join(dir, 'data');
+  if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+  return dataDir;
+};
+const dbPath = process.env.DB_PATH || path.join(getDataDir(), 'bank.db');
 const db = new DatabaseSync(dbPath);
 db.exec('PRAGMA foreign_keys = ON');
 db.exec('PRAGMA journal_mode=WAL');

@@ -7,8 +7,7 @@ import { fileURLToPath } from 'url';
 import db from './db.js';
 import { hashPassword, verifyPassword, signToken, requireAuth, requireAdmin } from './auth.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const getDirname = () => path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 4000;
 
 const app = express();
@@ -471,7 +470,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // ========= SERVE FRONTEND =========
-const distDir = path.join(__dirname, '..', 'dist');
+const distDir = path.join(getDirname(), '..', 'dist');
 if (fs.existsSync(distDir)) {
   app.use(express.static(distDir));
   app.get('*', (req, res) => res.sendFile(path.join(distDir, 'index.html')));
